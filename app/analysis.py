@@ -2,8 +2,8 @@
 import pandas as pd
 from .models import CustomerData
 
-def read_csv(file):
-    df = pd.read_csv(file)
+def read_csv(uploaded_file=None):
+    df = pd.read_csv(uploaded_file)
     customers = []
     for index, row in df.iterrows():
         customer = CustomerData(**row.to_dict())
