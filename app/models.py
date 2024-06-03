@@ -57,3 +57,7 @@ class CustomerData:
         for key, value in kwargs.items():
             if not hasattr(self, key):
                 setattr(self, key, value)
+
+    @classmethod
+    def get_fields(cls):
+        return [attr for attr in cls.__init__.__code__.co_varnames if attr != 'self' and not attr.startswith('_')]
