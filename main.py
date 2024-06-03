@@ -32,7 +32,7 @@ def manage_criteria_selection():
 def manage_initial_estimate_display():
     # Initial estimate title line
     initial_estimate = st.empty()
-    initial_estimate.text("Initial Estimate of Complete Records: 0%")
+    initial_estimate.header("Initial Completeness Estimate: 0%")
 
 def manage_analysis_button():
     # Run analysis button
@@ -69,14 +69,26 @@ def manage_analysis_button():
         else:
             st.error("Please upload a CSV file to run the analysis.")
 
+def manage_email_capture():
+    pass
+
+def manage_report_send():
+    pass
+
 def main():
     # Set the title of the app
     st.title("Customer Data Analysis")
-
-    manage_file_uploader()
-    manage_criteria_selection()
     manage_initial_estimate_display()
+    st.header('1. Upload File', divider='blue', help='Upload a csv file with customer data here')
+    manage_file_uploader()
+    st.header('2. Select Criteria', divider='blue', help='Choose what completeness consists of')
+    manage_criteria_selection()
     manage_analysis_button()
+    manage_initial_estimate_display()
+
+    st.header('3. Create and Send Report', divider='blue')
+    manage_email_capture()
+    manage_report_send()
 
 if __name__ == "__main__":
     main()
