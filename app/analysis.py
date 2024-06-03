@@ -2,6 +2,7 @@
 import pandas as pd
 from .models import CustomerData
 
+
 def read_csv(uploaded_file=None):
     df = pd.read_csv(uploaded_file)
     customers = []
@@ -9,6 +10,7 @@ def read_csv(uploaded_file=None):
         customer = CustomerData(**row.to_dict())
         customers.append(customer)
     return customers
+
 
 def analyze_customers(customers, criteria):
     complete_records = []

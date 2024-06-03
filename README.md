@@ -9,7 +9,7 @@ The Customer Data Analysis Tool allows users to upload customer data tables in C
 
 ## Features
 
-1. **CSV Upload**: Users can upload customer data in CSV format.
+1. **CSV Upload**: Users can upload customer data in CSV format. NOTE: Currently must be true CSV with UTF-8 Encoding
 2. **Records Analysis**: Analyzes the uploaded data based on user-defined criteria for 'complete records.'
 3. **Report Generation**: Generates a detailed PDF report of the analysis results.
 4. **Email Capture**: Captures the user's email address to send the report.
