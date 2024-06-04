@@ -31,11 +31,8 @@ def process_criteria_selection(criteria_input=None):
     return criteria_list
 
 def manage_initial_estimate_display(initial_estimate_field=None, complete_percentage=0.00):
-    # Initial estimate title line
-    if initial_estimate_field == None:
-        initial_estimate_field = st.empty()
-    initial_estimate_field.write(f"Record Completeness Estimate: {complete_percentage:.2f}%")
-    return initial_estimate_field
+    st.write(f"Record Completeness Estimate: {complete_percentage:.2f}%")
+
 
 def manage_analysis_button(uploaded_file=None, criteria_list=None, initial_estimate_field=None):
     # Run analysis button
@@ -43,26 +40,17 @@ def manage_analysis_button(uploaded_file=None, criteria_list=None, initial_estim
         if uploaded_file is not None:
             try:
                 # Read the CSV file and convert to customer data instances
-                st.dataframe(uploaded_file)
-                customers = read_csv(io.StringIO(uploaded_file.getvalue().decode('utf-8')))
+                #st.dataframe(uploaded_file)
+                uploaded_df, customers = read_csv(io.StringIO(uploaded_file.getvalue().decode('utf-8')))
 
                 # Analyze the customer data based on criteria
-                complete_records, incomplete_records = analyze_customers(customers, criteria_list)
+                result = analyze_customers(uploaded_df, criteria_list)
 
-                # Calculate the percentage of complete records
-                total_records = len(customers)
-                complete_percentage = (len(complete_records) / total_records) * 100 if total_records > 0 else 0
+                # Print the results
+                st.write(f"Percentage of complete records: {result['percent_complete']:.2f}%")
+                st.subheader("Summary Table")
+                st.dataframe(result['summary'])
 
-
-                # Display the analysis results
-                #st.write(f"Complete Records: {len(complete_records)}")
-                #st.write(f"Incomplete Records: {len(incomplete_records)}")
-
-                # Offer Email Generation
-                # user_email = st.text_input("Enter your email to receive the report")
-                # capture_user_email_and_generate_report(user_email)
-                # report = generate_report(complete_records, incomplete_records, user_email)
-                # st.success(f"Report generated and saved as {user_email}_report.pdf")
             except Exception as e:
                 st.error(f"An error occurred during analysis: {e}")
         else:
@@ -81,7 +69,7 @@ def main():
 
     # Set the title of the app
     st.title("Customer Data Analysis")
-    initial_estimate_field = manage_initial_estimate_display()
+    #initial_estimate_field = manage_initial_estimate_display()
 
     # Section 1: File Upload
     st.header('1. Upload File', help='Upload a csv file with customer data here')
@@ -89,12 +77,12 @@ def main():
 
     # Section 2: Criteria Selection
     st.header('2. Select Criteria', help='Choose what completeness consists of')
-    criteria_list_placeholder = st.empty()
-    criteria = criteria_list_placeholder.text_input("Enter criteria for complete records (comma-separated)",
+    #criteria_list_placeholder = st.empty()
+    criteria = st.text_input("Enter criteria for complete records (comma-separated)",
                                                     "email,phone_number")
     criteria_list = process_criteria_selection(criteria)
     manage_analysis_button(uploaded_file=uploaded_file, criteria_list=criteria_list)
-    manage_initial_estimate_display(initial_estimate_field=initial_estimate_field)
+    #manage_initial_estimate_display(initial_estimate_field=initial_estimate_field)
 
     # Section 3 Report Management
     st.header('3. Create and Send Report')
