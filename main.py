@@ -2,7 +2,7 @@
 import streamlit as st
 import io
 import pandas as pd
-from app.analysis import read_csv, analyze_customers
+from app.analysis import read_csv, analyze_customer_table
 from app.report import generate_report
 from app.email import capture_user_email
 
@@ -30,23 +30,21 @@ def process_criteria_selection(criteria_input=None):
     criteria_list = [c.strip() for c in criteria_input.split(',')]
     return criteria_list
 
-def manage_initial_estimate_display(initial_estimate_field=None, complete_percentage=0.00):
-    st.write(f"Record Completeness Estimate: {complete_percentage:.2f}%")
 
-
-def manage_analysis_button(uploaded_file=None, criteria_list=None, initial_estimate_field=None):
+def manage_analysis_button(uploaded_file=None, criteria_list=None):
     # Run analysis button
     if st.button("Run Analysis"):
         if uploaded_file is not None:
             try:
                 # Read the CSV file and convert to customer data instances
-                #st.dataframe(uploaded_file)
+                # TODO Figure out if we want to use the customer data model at this stage
                 uploaded_df, customers = read_csv(io.StringIO(uploaded_file.getvalue().decode('utf-8')))
 
                 # Analyze the customer data based on criteria
-                result = analyze_customers(uploaded_df, criteria_list)
+                result = analyze_customer_table(uploaded_df, criteria_list)
 
                 # Print the results
+                st.subheader("Preliminary Results")
                 st.write(f"Percentage of complete records: {result['percent_complete']:.2f}%")
                 st.subheader("Summary Table")
                 st.dataframe(result['summary'])
@@ -64,25 +62,22 @@ def manage_report_send():
     pass
 
 def main():
-    # Set Analyis Flag
-    is_analyzed = False
 
     # Set the title of the app
     st.title("Customer Data Analysis")
-    #initial_estimate_field = manage_initial_estimate_display()
 
     # Section 1: File Upload
     st.header('1. Upload File', help='Upload a csv file with customer data here')
     uploaded_file = manage_file_uploader()
 
-    # Section 2: Criteria Selection
+    # Section 2: 2a Criteria Selection
     st.header('2. Select Criteria', help='Choose what completeness consists of')
-    #criteria_list_placeholder = st.empty()
     criteria = st.text_input("Enter criteria for complete records (comma-separated)",
                                                     "email,phone_number")
     criteria_list = process_criteria_selection(criteria)
+
+    # Section 2: 2b Results Display
     manage_analysis_button(uploaded_file=uploaded_file, criteria_list=criteria_list)
-    #manage_initial_estimate_display(initial_estimate_field=initial_estimate_field)
 
     # Section 3 Report Management
     st.header('3. Create and Send Report')

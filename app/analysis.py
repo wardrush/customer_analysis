@@ -11,26 +11,25 @@ def read_csv(uploaded_file=None):
         customers.append(customer)
     return df, customers
 
-def calculate_filter_results_table(df: pd.DataFrame, criteria: list):
+def analyze_customer_table(customer_table: pd.DataFrame, criteria_list: list):
     """
     Check the completeness of records in a dataset based on user-defined criteria.
 
     Parameters:
-    df (pd.DataFrame): The customer CRM dataset.
-    criteria (list): A list of column names to check for completeness.
+    customer_table (pd.DataFrame): The customer CRM dataset.
+    criteria_list (list): A list of column names to check for completeness.
 
     Returns:
     dict: A dictionary containing the percentage of complete records and a summary table.
     """
-    #print(df)
-    df = pd.DataFrame(df)
+    #customer_table = pd.DataFrame(customer_table)
     # Check if all criteria columns are in the dataframe
-    missing_columns = [col for col in criteria if col not in df.columns]
+    missing_columns = [col for col in criteria_list if col not in customer_table.columns]
     if missing_columns:
         raise ValueError(f"The following columns are missing from the uploaded dataframe: {missing_columns}")
 
     # Create a boolean mask for complete records based on the criteria
-    complete_mask = df[criteria].notnull().all(axis=1)
+    complete_mask = customer_table[criteria_list].notnull().all(axis=1)
 
     # Calculate the percentage of complete records
     percent_complete = complete_mask.mean() * 100
@@ -43,8 +42,8 @@ def calculate_filter_results_table(df: pd.DataFrame, criteria: list):
     }
 
     # Calculate the summary statistics for each criterion
-    for criterion in criteria:
-        non_null_mask = df[criterion].notnull()
+    for criterion in criteria_list:
+        non_null_mask = customer_table[criterion].notnull()
         percent_non_null = non_null_mask.mean() * 100
         number_non_null = non_null_mask.sum()
 
@@ -60,21 +59,7 @@ def calculate_filter_results_table(df: pd.DataFrame, criteria: list):
     # Convert summary dictionary to a DataFrame
     summary_df = pd.DataFrame(summary)
 
+    result = {'percent_complete': percent_complete, 'summary': summary_df}
     # Return the percentage of complete records and the summary DataFrame
-    return {
-        'percent_complete': percent_complete,
-        'summary': summary_df
-    }
-
-def analyze_customers(customers, criteria):
-    # Calculate a final percent score @ output a table of record # and % per criterion
-    filter_results_table = calculate_filter_results_table(customers, criteria)
-
-    # Define the criteria
-    #criteria = ['email', 'phone', 'name', 'address']
-
-    # Get the completeness check result
-    result = calculate_filter_results_table(customers, criteria)
-
     return result
 
