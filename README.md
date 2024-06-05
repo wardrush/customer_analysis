@@ -1,5 +1,7 @@
 # customer_analysis
 A UI for customer table analysis
+<img width="781" alt="image" src="https://github.com/wardrush/customer_analysis/assets/24572765/85a6f9e3-8314-4efe-9f27-a45ff84f2263">
+
 
 # Customer Data Analysis Tool
 
