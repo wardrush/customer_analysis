@@ -53,9 +53,6 @@ def manage_analysis_button(uploaded_file=None, criteria_list=None):
                 # Apply the color highlighting function to the relevant columns
                 st.dataframe(result_df.style.map(highlight_cells, subset=['Percent Non-null']))
 
-                # Alternatively, apply the function to all columns if needed
-                # st.dataframe(df.style.applymap(highlight_cells))
-                #st.dataframe(result['summary'])
 
             except Exception as e:
                 st.error(f"An error occurred during analysis: {e}")
