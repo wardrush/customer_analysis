@@ -1,9 +1,23 @@
 # app/utils.py
 from app.models import CustomerData
 
+
+# Define function to highlight cells based on the value ranges
+def highlight_cells(val):
+    if val >= 90:
+        color = 'green'
+    elif 80 <= val < 90:
+        color = 'yellow'
+    else:
+        color = 'red'
+    return f'background-color: {color}'
+
+
+
+
 def get_customer_data_fields():
     return CustomerData.get_fields()
-
+"""
 # Set your OpenAI API key here
 openai.api_key = "YOUR_OPENAI_API_KEY"
 
@@ -15,3 +29,5 @@ def match_columns(column_names):
         max_tokens=150
     )
     return response.choices[0].text.strip()
+    
+"""

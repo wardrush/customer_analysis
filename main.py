@@ -5,6 +5,7 @@ import pandas as pd
 from app.analysis import read_csv, analyze_customer_table
 from app.report import generate_report
 from app.email import capture_user_email
+from app.utils import highlight_cells
 
 def manage_file_uploader():
     # File uploader for CSV files
@@ -42,12 +43,19 @@ def manage_analysis_button(uploaded_file=None, criteria_list=None):
 
                 # Analyze the customer data based on criteria
                 result = analyze_customer_table(uploaded_df, criteria_list)
+                result_df = pd.DataFrame(result['summary'])
+
 
                 # Print the results
                 st.subheader("Preliminary Results")
                 st.write(f"Percentage of complete records: {result['percent_complete']:.2f}%")
                 st.subheader("Summary Table")
-                st.dataframe(result['summary'])
+                # Apply the color highlighting function to the relevant columns
+                st.dataframe(result_df.style.map(highlight_cells, subset=['Percent Non-null']))
+
+                # Alternatively, apply the function to all columns if needed
+                # st.dataframe(df.style.applymap(highlight_cells))
+                #st.dataframe(result['summary'])
 
             except Exception as e:
                 st.error(f"An error occurred during analysis: {e}")
