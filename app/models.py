@@ -1,63 +1,161 @@
 # app/models.py
+from dataclasses import dataclass, field, fields
+from typing import Optional, Any, Dict, List
+from datetime import datetime
 
-class CustomerData:
-    def __init__(self, **kwargs):
-        self.customer_id = kwargs.get('customer_id')
-        self.first_name = kwargs.get('first_name')
-        self.last_name = kwargs.get('last_name')
-        self.email = kwargs.get('email')
-        self.phone_number = kwargs.get('phone_number')
-        self.date_of_birth = kwargs.get('date_of_birth')
-        self.gender = kwargs.get('gender')
-        self.address_line1 = kwargs.get('address_line1')
-        self.address_line2 = kwargs.get('address_line2')
-        self.city = kwargs.get('city')
-        self.state = kwargs.get('state')
-        self.postal_code = kwargs.get('postal_code')
-        self.country = kwargs.get('country')
-        self.join_date = kwargs.get('join_date')
-        self.last_purchase_date = kwargs.get('last_purchase_date')
-        self.total_spend = kwargs.get('total_spend')
-        self.average_order_value = kwargs.get('average_order_value')
-        self.order_count = kwargs.get('order_count')
-        self.is_loyalty_member = kwargs.get('is_loyalty_member')
-        self.loyalty_points = kwargs.get('loyalty_points')
-        self.preferred_store = kwargs.get('preferred_store')
-        self.communication_preference = kwargs.get('communication_preference')
-        self.subscription_status = kwargs.get('subscription_status')
-        self.has_purchased = kwargs.get('has_purchased')
-        self.opt_in_email = kwargs.get('opt_in_email')
-        self.opt_in_sms = kwargs.get('opt_in_sms')
-        self.customer_segment = kwargs.get('customer_segment')
-        self.marketing_source = kwargs.get('marketing_source')
-        self.last_login_date = kwargs.get('last_login_date')
-        self.preferred_language = kwargs.get('preferred_language')
-        self.referral_code = kwargs.get('referral_code')
-        self.referral_count = kwargs.get('referral_count')
-        self.feedback_score = kwargs.get('feedback_score')
-        self.churn_risk = kwargs.get('churn_risk')
-        self.account_status = kwargs.get('account_status')
-        self.customer_notes = kwargs.get('customer_notes')
-        self.occupation = kwargs.get('occupation')
-        self.industry = kwargs.get('industry')
-        self.income_level = kwargs.get('income_level')
-        self.education_level = kwargs.get('education_level')
-        self.marital_status = kwargs.get('marital_status')
-        self.children_count = kwargs.get('children_count')
-        self.household_size = kwargs.get('household_size')
-        self.annual_spend = kwargs.get('annual_spend')
-        self.favorite_product = kwargs.get('favorite_product')
-        self.preferred_payment_method = kwargs.get('preferred_payment_method')
-        self.account_manager = kwargs.get('account_manager')
-        self.social_media_handle = kwargs.get('social_media_handle')
-        self.customer_satisfaction_score = kwargs.get('customer_satisfaction_score')
-        self.preferred_contact_time = kwargs.get('preferred_contact_time')
+@dataclass
+class Contact:
+    contact_id: str
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    created_at: datetime = field(default_factory=datetime.now)
+    updated_at: datetime = field(default_factory=datetime.now)
+    properties: Dict[str, Any] = field(default_factory=dict)
+    companies: List['Company'] = field(default_factory=list)
+    deals: List['Deal'] = field(default_factory=list)
+    tickets: List['Ticket'] = field(default_factory=list)
 
-        # Add any additional properties dynamically
+@dataclass
+class CustomerData(Contact):
+    customer_id: str = None
+    first_name: str = None
+    last_name: str = None
+    email: Optional[str] = None
+    phone_number: Optional[str] = None
+    date_of_birth: Optional[datetime] = None
+    gender: Optional[str] = None
+    address_line1: Optional[str] = None
+    address_line2: Optional[str] = None
+    city: Optional[str] = None
+    state: Optional[str] = None
+    postal_code: Optional[str] = None
+    country: Optional[str] = None
+    join_date: Optional[datetime] = None
+    last_purchase_date: Optional[datetime] = None
+    total_spend: Optional[float] = None
+    average_order_value: Optional[float] = None
+    order_count: Optional[int] = None
+    is_loyalty_member: Optional[bool] = None
+    loyalty_points: Optional[int] = None
+    preferred_store: Optional[str] = None
+    communication_preference: Optional[str] = None
+    subscription_status: Optional[str] = None
+    has_purchased: Optional[bool] = None
+    opt_in_email: Optional[bool] = None
+    opt_in_sms: Optional[bool] = None
+    customer_segment: Optional[str] = None
+    marketing_source: Optional[str] = None
+    last_login_date: Optional[datetime] = None
+    preferred_language: Optional[str] = None
+    referral_code: Optional[str] = None
+    referral_count: Optional[int] = None
+    feedback_score: Optional[float] = None
+    churn_risk: Optional[str] = None
+    account_status: Optional[str] = None
+    customer_notes: Optional[str] = None
+    occupation: Optional[str] = None
+    industry: Optional[str] = None
+    income_level: Optional[str] = None
+    education_level: Optional[str] = None
+    marital_status: Optional[str] = None
+    children_count: Optional[int] = None
+    household_size: Optional[int] = None
+    annual_spend: Optional[float] = None
+    favorite_product: Optional[str] = None
+    preferred_payment_method: Optional[str] = None
+    account_manager: Optional[str] = None
+    social_media_handle: Optional[str] = None
+    customer_satisfaction_score: Optional[float] = None
+    preferred_contact_time: Optional[str] = None
+    extra_fields: Dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self, **kwargs):
+        # Ensure datetime fields are properly initialized if provided as strings or other types
+        if isinstance(self.date_of_birth, str):
+            self.date_of_birth = datetime.fromisoformat(self.date_of_birth)
+        if isinstance(self.join_date, str):
+            self.join_date = datetime.fromisoformat(self.join_date)
+        if isinstance(self.last_purchase_date, str):
+            self.last_purchase_date = datetime.fromisoformat(self.last_purchase_date)
+        if isinstance(self.last_login_date, str):
+            self.last_login_date = datetime.fromisoformat(self.last_login_date)
+
+        # Handle extra kwargs and add them to extra_fields
         for key, value in kwargs.items():
             if not hasattr(self, key):
-                setattr(self, key, value)
+                self.extra_fields[key] = value
 
+@dataclass
+class Company:
+    company_id: str
+    name: Optional[str] = None
+    domain: Optional[str] = None
+    industry: Optional[str] = None
+    created_at: datetime = field(default_factory=datetime.now)
+    updated_at: datetime = field(default_factory=datetime.now)
+    properties: Dict[str, Any] = field(default_factory=dict)
+    contacts: List[Contact] = field(default_factory=list)
+    deals: List['Deal'] = field(default_factory=list)
+    tickets: List['Ticket'] = field(default_factory=list)
+
+@dataclass
+class Deal:
+    deal_id: str
+    name: Optional[str] = None
+    amount: Optional[float] = None
+    stage: Optional[str] = None
+    created_at: datetime = field(default_factory=datetime.now)
+    updated_at: datetime = field(default_factory=datetime.now)
+    properties: Dict[str, Any] = field(default_factory=dict)
+    contacts: List[Contact] = field(default_factory=list)
+    companies: List[Company] = field(default_factory=list)
+    tickets: List['Ticket'] = field(default_factory=list)
+
+@dataclass
+class Ticket:
+    ticket_id: str
+    subject: Optional[str] = None
+    status: Optional[str] = None
+    priority: Optional[str] = None
+    created_at: datetime = field(default_factory=datetime.now)
+    updated_at: datetime = field(default_factory=datetime.now)
+    properties: Dict[str, Any] = field(default_factory=dict)
+    contacts: List[Contact] = field(default_factory=list)
+    companies: List[Company] = field(default_factory=list)
+    deals: List[Deal] = field(default_factory=list)
+
+@dataclass
+class Activity:
+    activity_id: str
+    type: str
+    timestamp: datetime = field(default_factory=datetime.now)
+    details: Dict[str, Any] = field(default_factory=dict)
+    contacts: List[Contact] = field(default_factory=list)
+    companies: List[Company] = field(default_factory=list)
+    deals: List[Deal] = field(default_factory=list)
+    tickets: List[Ticket] = field(default_factory=list)
+
+@dataclass
+class Product:
+    product_id: str
+    name: str
+    description: Optional[str] = None
+    price: Optional[float] = None
+    created_at: datetime = field(default_factory=datetime.now)
+    updated_at: datetime = field(default_factory=datetime.now)
+    properties: Dict[str, Any] = field(default_factory=dict)
+    deals: List[Deal] = field(default_factory=list)
+
+# Class method to get fields of the dataclass
+@dataclass
+class BaseModel:
     @classmethod
-    def get_fields(cls):
-        return [attr for attr in cls.__init__.__code__.co_varnames if attr != 'self' and not attr.startswith('_')]
+    def get_fields(cls) -> List[str]:
+        return [field.name for field in fields(cls)]
+
+# Example usage
+if __name__ == "__main__":
+    contact_field_names = Contact.get_fields()
+    print(contact_field_names)
