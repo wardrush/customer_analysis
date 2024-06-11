@@ -23,6 +23,6 @@ def highlight_cells(val):
 
 if __name__=="__main__":
 
-    api_key = "sk-proj-lsX8CbRVYtBUVwyZoq2TT3BlbkFJ7WHiDQRbwftfOcC8TJtI"
+    api_key = None
     user_input = pd.read_csv(os.path.join(Path(os.getcwd()).parent,"data/Integer_test_data.csv")).columns.tolist()
     var = completion_to_dataframe(column_matcher_gpt(user_input, api_key), to_csv=True)

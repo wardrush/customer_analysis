@@ -63,7 +63,7 @@ def analyze_customer_table(customer_table: pd.DataFrame, criteria_list: list):
     # Return the percentage of complete records and the summary DataFrame
     return result
 
-api_key = "sk-proj-lsX8CbRVYtBUVwyZoq2TT3BlbkFJ7WHiDQRbwftfOcC8TJtI"
+api_key=None
 def fuzzy_ai_match_columns(customer_table: pd.DataFrame, api_key=api_key):
     return completion_to_dataframe(customer_table.columns.tolist(), api_key)
 
