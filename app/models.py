@@ -4,7 +4,12 @@ from typing import Optional, Any, Dict, List
 from datetime import datetime
 
 @dataclass
-class Contact:
+class BaseModel:
+    @classmethod
+    def get_fields(cls) -> List[str]:
+        return [field.name for field in fields(cls)]
+@dataclass
+class Contact(BaseModel):
     contact_id: str
     first_name: Optional[str] = None
     last_name: Optional[str] = None
@@ -18,7 +23,7 @@ class Contact:
     tickets: List['Ticket'] = field(default_factory=list)
 
 @dataclass
-class CustomerData(Contact):
+class CustomerModel(Contact):
     customer_id: str = None
     first_name: str = None
     last_name: str = None
@@ -88,7 +93,7 @@ class CustomerData(Contact):
                 self.extra_fields[key] = value
 
 @dataclass
-class Company:
+class Company(BaseModel):
     company_id: str
     name: Optional[str] = None
     domain: Optional[str] = None
@@ -101,7 +106,7 @@ class Company:
     tickets: List['Ticket'] = field(default_factory=list)
 
 @dataclass
-class Deal:
+class Deal(BaseModel):
     deal_id: str
     name: Optional[str] = None
     amount: Optional[float] = None
@@ -114,7 +119,7 @@ class Deal:
     tickets: List['Ticket'] = field(default_factory=list)
 
 @dataclass
-class Ticket:
+class Ticket(BaseModel):
     ticket_id: str
     subject: Optional[str] = None
     status: Optional[str] = None
@@ -127,7 +132,7 @@ class Ticket:
     deals: List[Deal] = field(default_factory=list)
 
 @dataclass
-class Activity:
+class Activity(BaseModel):
     activity_id: str
     type: str
     timestamp: datetime = field(default_factory=datetime.now)
@@ -138,7 +143,7 @@ class Activity:
     tickets: List[Ticket] = field(default_factory=list)
 
 @dataclass
-class Product:
+class Product(BaseModel):
     product_id: str
     name: str
     description: Optional[str] = None
@@ -149,13 +154,22 @@ class Product:
     deals: List[Deal] = field(default_factory=list)
 
 # Class method to get fields of the dataclass
-@dataclass
-class BaseModel:
-    @classmethod
-    def get_fields(cls) -> List[str]:
-        return [field.name for field in fields(cls)]
+
 
 # Example usage
 if __name__ == "__main__":
+    print("DataClass Field Names:")
     contact_field_names = Contact.get_fields()
-    print(contact_field_names)
+    print("Contact: ", contact_field_names)
+    customer_field_names = CustomerModel.get_fields()
+    print("CustomerModel (Inherits Contact): ", customer_field_names)
+    company_field_names = Company.get_fields()
+    print("Company: ", company_field_names)
+    activity_field_names = Activity.get_fields()
+    print("Activity: ", activity_field_names)
+    deal_field_names = Deal.get_fields()
+    print("Deal: ", deal_field_names)
+    ticket_field_names = Ticket.get_fields()
+    print("Ticket: ", ticket_field_names)
+    product_field_names = Product.get_fields()
+    print("Product: ", product_field_names)

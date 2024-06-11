@@ -156,7 +156,6 @@ data = {
     'ShippingAddress': [fake.address() for _ in range(rows_requested)],
     'PhoneNumber': [fake.phone_number() for _ in range(rows_requested)],
     'BuyerTitle': [fake.engineering_profession() for _ in range(rows_requested)]
-    ''
     #'TransactionHistory': [create_transaction_history() for _ in range(100)]
 }
 

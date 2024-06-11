@@ -1,6 +1,6 @@
-# app/email.py
-import streamlit as st
-from .report import generate_report
+# app/email_manager.py
+#import streamlit as st
+#from .report import generate_report
 
 
 def capture_user_email(user_email=None, complete_records=None, incomplete_records=None):

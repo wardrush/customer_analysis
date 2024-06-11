@@ -1,13 +1,13 @@
 # app/analysis.py
 import pandas as pd
-from .models import CustomerData
-
+from .models import CustomerModel
+from .ai_manager import column_matcher_gpt, completion_to_dataframe
 
 def read_csv(uploaded_file=None):
     df = pd.read_csv(uploaded_file)
     customers = []
     for index, row in df.iterrows():
-        customer = CustomerData(**row.to_dict())
+        customer = CustomerModel(**row.to_dict())
         customers.append(customer)
     return df, customers
 
@@ -62,4 +62,8 @@ def analyze_customer_table(customer_table: pd.DataFrame, criteria_list: list):
     result = {'percent_complete': percent_complete, 'summary': summary_df}
     # Return the percentage of complete records and the summary DataFrame
     return result
+
+api_key = "sk-proj-lsX8CbRVYtBUVwyZoq2TT3BlbkFJ7WHiDQRbwftfOcC8TJtI"
+def fuzzy_ai_match_columns(customer_table: pd.DataFrame, api_key=api_key):
+    return completion_to_dataframe(customer_table.columns.tolist(), api_key)
 
