@@ -2,6 +2,7 @@
 #
 from openai import OpenAI
 from .models import CustomerModel
+import pandas as pd
 def column_matcher_gpt(user_input, api_key):
     system_context = """
                     This GPT is an assistant tool that imports a list of column names from a dataset and a customer data
