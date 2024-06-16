@@ -1,10 +1,8 @@
 # app/utils.py
 import pandas as pd
 
-from app.models import CustomerModel # Can future import other options
 from app.analysis import analyze_customer_table
 import os
-from openai import OpenAI
 from pathlib import Path
 import io
 import streamlit as st
@@ -51,7 +49,7 @@ def manage_file_uploader():
     # Radio button to select between uploading a file and using test data
     data_source = st.radio(
         "Select data source:",
-        ('Upload a CSV file', 'Use Integer sample data')
+        ('Upload a CSV file', 'Use sample data')
     )
 
     if data_source == 'Upload a CSV file':
@@ -82,7 +80,7 @@ def manage_file_uploader():
         # Use test data
         try:
             st.write("Using test data:")
-            test_data = pd.read_csv(os.path.join("data/Integer_test_data.csv"), index_col=0)
+            test_data = pd.read_csv(os.path.join('app', 'data', 'sample_data.csv'), index_col=0)
             df = pd.DataFrame(test_data)
             st.dataframe(df)
             return None, df
@@ -181,5 +179,5 @@ def highlight_cells(val):
 if __name__=="__main__":
 
     api_key = None
-    user_input = pd.read_csv(os.path.join(Path(os.getcwd()).parent,"data/Integer_test_data.csv")).columns.tolist()
+    user_input = pd.read_csv(os.path.join(Path(os.getcwd()).parent,"data/sample_data.csv")).columns.tolist()
     var = completion_to_dataframe(column_matcher_gpt(user_input, api_key), to_csv=True)

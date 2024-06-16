@@ -3,9 +3,9 @@ import io
 import os
 import pandas as pd
 from app.analysis import read_csv, analyze_customer_table, fuzzy_ai_match_columns
-from app.report import generate_report
 from app.email_manager import capture_user_email
 import app.utils as utils
+from app.report import generate_pdf_report
 
 
 

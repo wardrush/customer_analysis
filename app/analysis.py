@@ -1,7 +1,7 @@
 # app/analysis.py
 import pandas as pd
-from .models import CustomerModel
-from .ai_manager import column_matcher_gpt, completion_to_dataframe
+from app.data.models import CustomerModel
+from .ai_manager import completion_to_dataframe
 
 def read_csv(uploaded_file=None):
     df = pd.read_csv(uploaded_file)

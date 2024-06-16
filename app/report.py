@@ -4,7 +4,7 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
 from reportlab.lib import colors
 from reportlab.lib.units import mm
-from reportlab.pdfgen import canvas
+from app.data.boilerplate import company_overview, tool_methodology_and_limitations, contact_table_data
 
 def add_page_number(canvas, doc):
     """
@@ -35,7 +35,7 @@ def generate_pdf_report(output_path, analysis_summary, percent_complete):
     elements.append(Spacer(1, 12))
 
     # Add Management Summary
-    elements.append(Paragraph("1. Management Summary", section_title_style))
+    elements.append(Paragraph("1. Executive Summary", section_title_style))
     summary_text = f"The percentage of complete records is {percent_complete:.2f}%. This report evaluates the completeness of the customer data based on the specified criteria."
     elements.append(Paragraph(summary_text, normal_style))
     elements.append(Spacer(1, 12))
@@ -61,22 +61,11 @@ def generate_pdf_report(output_path, analysis_summary, percent_complete):
 
     # Add Tool Methodology and Limitations section
     elements.append(Paragraph("2. Tool Methodology and Limitations", section_title_style))
-    methodology_text = """
-    This section describes the methodology used by the tool to evaluate customer data completeness. It includes details about the data processing techniques, criteria selection, and the algorithm used to calculate completeness percentages. Limitations of the tool, such as dependencies on data quality and assumptions made during analysis, are also discussed.
-    """
+    methodology_text = tool_methodology_and_limitations
     elements.append(Paragraph(methodology_text, normal_style))
     elements.append(PageBreak())
 
-    # Add Company Overview and Contact Information section
-    elements.append(Paragraph("3. Company Overview and Contact Information", section_title_style))
-    company_overview_text = """
-    This section provides an overview of the company under analysis, including key business details and contact information. It includes information about the company's history, mission, key personnel, and any other relevant details that provide context to the data completeness analysis.
-    """
-    elements.append(Paragraph(company_overview_text, normal_style))
-    elements.append(PageBreak())
-
-    # Add detailed sections for each criterion
-    elements.append(Paragraph("4. Detailed Criterion Analysis", section_title_style))
+    elements.append(Paragraph("3. Detailed Criterion Analysis", section_title_style))
     for index, row in analysis_summary.iterrows():
         criterion_title = f"{row['Criterion']}"
         criterion_summary = f"Percentage of non-null values: {row['Percent Non-null']:.2f}%<br/>Number of non-null values: {row['Number Non-null']}"
@@ -84,14 +73,38 @@ def generate_pdf_report(output_path, analysis_summary, percent_complete):
         elements.append(Paragraph(criterion_summary, normal_style))
         elements.append(Spacer(1, 12))
 
+    # Add Company Overview and Contact Information section
+    elements.append(Paragraph("4. Company Overview and Contact Information", section_title_style))
+    company_overview_text = company_overview
+    elements.append(Paragraph(company_overview_text, normal_style))
+    elements.append(Spacer(1, 12))
+
+
+
+    table = Table(contact_table_data)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.black),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+    ]))
+    elements.append(table)
+    elements.append(PageBreak())
+
+
+
     # Build the PDF with page numbers
     doc.build(elements, onFirstPage=add_page_number, onLaterPages=add_page_number)
+
 
 
 if __name__=="__main__":
     # Example usage:
     # Assume `result_df` is the DataFrame containing the analysis summary and `percent_complete` is the computed percentage
-    output_path = "customer_data_completeness_report.pdf"
+    output_path = "../customer_data_completeness_report3.pdf"
     import pandas as pd
 
     # Fake result DataFrame
