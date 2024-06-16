@@ -5,59 +5,62 @@ A UI for customer table analysis
 
 # Customer Data Analysis Tool
 
-## Overview
-
-The Customer Data Analysis Tool allows users to upload customer data tables in CSV format and analyze the data to estimate the number of 'complete records.' This tool is primarily designed for Private Equity analysts performing due diligence, but it can be used by any organization that needs to analyze customer data quality.
+The Customer Analysis Tool helps Private Equity analysts and other organizations assess the completeness of customer data during due diligence. The tool allows users to upload customer data tables in CSV format and analyze them based on user-defined criteria.
 
 ## Features
 
-1. **CSV Upload**: Users can upload customer data in CSV format. NOTE: Currently must be true CSV with UTF-8 Encoding
-2. **Records Analysis**: Analyzes the uploaded data based on user-defined criteria for 'complete records.'
-3. **Report Generation**: Generates a detailed PDF report of the analysis results.
-4. **Email Capture**: Captures the user's email address to send the report.
+- **CSV Upload**: Upload customer data in CSV format.
+- **Data Analysis**: Evaluate the completeness of records based on user-defined criteria.
+- **Report Generation**: Generate detailed PDF reports of the analysis.
+- **Email Capture**: Capture user email addresses to send analysis reports.
 
 ## Future Enhancements
 
-- Integration with Hubspot and other CRM systems.
-- Enhanced data upload options (e.g., JSON, direct API integration).
-- Additional analysis metrics and visualizations.
+- Integration with CRM systems like Hubspot.
+- Support for additional data formats (JSON, API).
+- Enhanced analysis metrics and visualizations.
 
 ## Getting Started
+
+There are two ways to use this tool. 
+1. The main procedure is to use the [hosted version here](https://customeranalysis-wardr.streamlit.app/)
+2. If you'd like to host your own version, follow the procedure below. 
+
 
 ### Prerequisites
 
 - Python 3.8 or higher
-- Virtual environment tool (e.g., `venv` or `virtualenv`)
+- Virtual environment tool (`venv` or `virtualenv`)
 
 ### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/customer-data-analysis.git
-   cd customer-data-analysis
-   ```
+    ```bash
+    git clone https://github.com/wardrush/customer_analysis.git
+    cd customer_analysis
+    ```
 
 2. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate   # On Windows: venv\Scripts\activate
-   ```
+    ```bash
+    python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
 
 3. Install the required packages:
-   ```bash
-   pip install -r requirements.txt
-   ```
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 ### Usage
 
 1. Run the Streamlit application:
-   ```bash
-   streamlit run main.py
-   ```
+    ```bash
+    streamlit run main.py
+    ```
 
-2. Open your web browser and navigate to the URL provided by Streamlit (typically `http://localhost:8501`).
+2. Open your web browser and navigate to the provided URL (typically `http://localhost:8501`).
 
-3. Upload your CSV file, specify the criteria for complete records, and enter your email to receive the analysis report.
+3. Upload your CSV file, define the criteria for complete records, and enter your email to receive the analysis report.
 
 ## Project Structure
 
@@ -66,34 +69,35 @@ customer_analysis/
 │
 ├── app/
 │   ├── __init__.py
-│   ├── models.py
 │   ├── analysis.py
+│   ├── email.py
+│   ├── models.py
 │   ├── report.py
-│   └── email.py
+│   └── utils.py
 │
+├── assets/
+│   └── sample_data.csv
+│
+├── .gitignore
+├── LICENSE
 ├── main.py
-├── requirements.txt
-└── README.md
+├── README.md
+└── requirements.txt
 ```
 
-### app/models.py
+### Detailed Structure
 
-Defines the `CustomerData` class, which represents the customer data model.
-
-### app/analysis.py
-
-Contains functions for reading CSV files and analyzing customer data based on specified criteria.
-
-### app/report.py
-
-Contains functions for generating PDF reports based on the analysis results.
-
-### main.py
-
-The main entry point for the Streamlit application, tying together file upload, data analysis, and report generation.
-
-
+- **app/\_\_init\_\_.py**: Initializes the app module.
+- **app/analysis.py**: Functions for reading and analyzing customer data.
+- **app/email.py**: Functions for handling email operations.
+- **app/models.py**: Defines the `CustomerData` class.
+- **app/report.py**: Functions for generating PDF reports.
+- **app/utils.py**: Utility functions used across the application.
+- **assets/sample_data.csv**: Sample data for testing the application.
+- **main.py**: Main entry point for the Streamlit application.
 
 ## License
 
 This project is licensed under the MIT License.
+
+---
