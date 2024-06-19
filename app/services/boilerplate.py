@@ -2,7 +2,6 @@
 # This file holds the boilerplate strings
 
 
-
 headers_how_to_use_this_tool ="""
                     **Purpose:**
 

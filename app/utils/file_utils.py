@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 
 def manage_file_uploader():
     # Radio button to select between uploading a file and using test data
@@ -36,7 +37,7 @@ def manage_file_uploader():
         # Use test data
         try:
             st.write("Using test data:")
-            test_data = pd.read_csv(os.path.join('frontend', 'data', 'sample_data.csv'), index_col=0)
+            test_data = pd.read_csv(os.path.join('app', 'static', 'sample_data.csv'), index_col=0)
             df = pd.DataFrame(test_data)
             st.dataframe(df)
             return None, df

@@ -1,5 +1,5 @@
 import streamlit as st
-from app.routes import setup_routes
+from routes import setup_routes
 
 def main():
     st.title("CRM Data Analyzer")

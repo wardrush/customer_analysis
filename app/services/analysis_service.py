@@ -1,15 +1,34 @@
-# frontend/analysis.py
+import streamlit as st
 import pandas as pd
-from app.models import CustomerModel
-from .ai_manager import completion_to_dataframe
+import io
+#from .boilerplate import analyze_customer_table
+from .utils.file_utils import highlight_cells
 
-def read_csv(uploaded_file=None):
-    df = pd.read_csv(uploaded_file)
-    customers = []
-    for index, row in df.iterrows():
-        customer = CustomerModel(**row.to_dict())
-        customers.append(customer)
-    return df, customers
+def manage_analysis_button(uploaded_file=None, df=None, criteria_list=None):
+    # Run analysis button
+    if st.button("Run Analysis"):
+        if df is None:
+                df, customers = pd.read_csv(io.StringIO(uploaded_file.getvalue().decode('utf-8')))
+        if df is not None:
+            try:
+                # Analyze the customer data based on criteria
+                result = analyze_customer_table(df, criteria_list)
+                result_df = pd.DataFrame(result['summary'])
+
+                # Print the results
+                st.subheader("Preliminary Results")
+                st.write(f"Percentage of complete records: {result['percent_complete']:.2f}%")
+                st.subheader("Summary Table")
+                # Apply the color highlighting function to the relevant columns
+                st.dataframe(result_df.style.applymap(highlight_cells, subset=['Percent Non-null']))
+
+                # st.subheader("AI-Matched Columns & Confidences")
+                # st.dataframe(fuzzy_ai_match_columns(uploaded_file))
+
+            except Exception as e:
+                st.error(f"An error occurred during analysis: {e}")
+        else:
+            st.error("Please upload a CSV file or select test data to run the analysis.")
 
 def analyze_customer_table(customer_table: pd.DataFrame, criteria_list: list):
     """
@@ -62,8 +81,3 @@ def analyze_customer_table(customer_table: pd.DataFrame, criteria_list: list):
     result = {'percent_complete': percent_complete, 'summary': summary_df}
     # Return the percentage of complete records and the summary DataFrame
     return result
-
-api_key=None
-def fuzzy_ai_match_columns(customer_table: pd.DataFrame, api_key=api_key):
-    return completion_to_dataframe(customer_table.columns.tolist(), api_key)
-

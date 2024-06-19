@@ -1,6 +1,7 @@
 import streamlit as st
-from app.services.api_service import match_columns
-from app.services.data_model_validation_service import validate_and_transform_data
+from .services.analysis_service import manage_analysis_button
+from .services.criteria_service import process_criteria_selection
+from .utils.file_utils import highlight_cells
 
 def setup_routes():
     st.sidebar.title("Navigation")
