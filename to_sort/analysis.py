@@ -1,6 +1,6 @@
-# app/analysis.py
+# frontend/analysis.py
 import pandas as pd
-from app.data.models import CustomerModel
+from app.models import CustomerModel
 from .ai_manager import completion_to_dataframe
 
 def read_csv(uploaded_file=None):

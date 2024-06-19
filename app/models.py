@@ -1,4 +1,4 @@
-# app/models.py
+# frontend/models.py
 from dataclasses import dataclass, field, fields
 from typing import Optional, Any, Dict, List
 from datetime import datetime

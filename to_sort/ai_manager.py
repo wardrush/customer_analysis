@@ -1,7 +1,7 @@
-#app/ai_manager.py
+#frontend/ai_manager.py
 #
 from openai import OpenAI
-from app.data.models import CustomerModel
+from app.models import CustomerModel
 import pandas as pd
 import io
 def column_matcher_gpt(user_input, api_key):

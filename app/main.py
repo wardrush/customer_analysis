@@ -1,11 +1,6 @@
 import streamlit as st
-import io
-import os
-import pandas as pd
-from app.analysis import read_csv, analyze_customer_table, fuzzy_ai_match_columns
-from app.email_manager import capture_user_email
-import app.utils as utils
-from app.report import generate_pdf_report
+import app.utils.utils as utils
+from app.utils.file_utils import manage_file_uploader
 
 
 
@@ -20,14 +15,14 @@ def manage_report_send():
 
 def main():
 
-    # Set the title of the app
+    # Set the title of the frontend
     st.image("./assets/CHC_logo.jpg", use_column_width=True)
     utils.manage_info_blurb()
     #st.title("Customer Data Health Check")
 
     # Section 1: File Upload
     st.header('📂 1. Upload File', help='Upload a csv file with customer data here')
-    uploaded_file, df = utils.manage_file_uploader()
+    uploaded_file, df = manage_file_uploader()
 
 
     # Section 2: 2a Criteria Selection
