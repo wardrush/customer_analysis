@@ -23,7 +23,7 @@ def manage_file_uploader():
                 else:
                     # Show a file preview
                     st.write("File Preview:")
-                    st.dataframe(df.head())
+                    st.dataframe(df)
                     return uploaded_file, df
             except pd.errors.EmptyDataError:
                 st.error("No columns to parse from file. Please upload a valid CSV file.")

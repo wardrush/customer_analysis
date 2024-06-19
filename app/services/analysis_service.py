@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import io
 #from .boilerplate import analyze_customer_table
-from .utils.file_utils import highlight_cells
+from utils.style_utils import highlight_cells
 
 def manage_analysis_button(uploaded_file=None, df=None, criteria_list=None):
     # Run analysis button
