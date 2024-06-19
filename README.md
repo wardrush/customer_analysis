@@ -65,24 +65,50 @@ There are two ways to use this tool.
 ## Project Structure
 
 ```
-customer_analysis/
+project_root/
 │
 ├── app/
 │   ├── __init__.py
-│   ├── analysis.py
-│   ├── email.py
+│   ├── main.py
+│   ├── config.py
+│   ├── routes.py
 │   ├── models.py
-│   ├── report.py
-│   └── utils.py
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── api_service.py
+│   │   ├── data_model_validation_service.py
+│   │   ├── email_validation_service.py
+│   │   ├── phone_validation_service.py
+│   │   ├── data_enrichment_service.py
+│   │
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── file_utils.py
+│   │   ├── data_transformations.py
+│   │   ├── validation_utils.py
+│   │
+│   ├── templates/
+│   │   └── report_template.html
+│   │
+│   └── static/
+│       └── css/
+│           └── styles.css
 │
-├── assets/
-│   └── sample_data.csv
+├── tests/
+│   ├── __init__.py
+│   ├── test_main.py
+│   ├── test_services/
+│   │   ├── __init__.py
+│   │   ├── test_api_service.py
+│   │   ├── test_data_model_validation_service.py
+│   │   ├── test_email_validation_service.py
+│   │   ├── test_phone_validation_service.py
+│   │   ├── test_data_enrichment_service.py
 │
-├── .gitignore
-├── LICENSE
-├── main.py
+├── requirements.txt
 ├── README.md
-└── requirements.txt
+└── Dockerfile
+
 ```
 
 ### Detailed Structure
