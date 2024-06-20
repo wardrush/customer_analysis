@@ -21,7 +21,6 @@ def main():
     uploaded_file, df = manage_file_uploader()
 
 
-
     # Section 2: 2a Criteria Selection
     st.header('🔭 2. Select Criteria', help='Choose what completeness consists of')
     if df is not None:
