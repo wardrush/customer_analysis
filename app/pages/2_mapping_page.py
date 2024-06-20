@@ -3,12 +3,13 @@ from shared_elements import render_sidebar, render_header
 from ..services.data_model_validation_service import map_columns
 
 # Render shared elements
-render_sidebar()
+#render_sidebar()
 render_header()
 
 st.title("Page 2")
 st.header('1b. Map Fields')
-if df is not None: map_columns(df)
+if df is not None:
+    transformed_df = map_columns(input_df = df)
 
 # Add your content for Page 2 here
 st.write("This is Page 2. Complete this task to proceed.")
