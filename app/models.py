@@ -1,4 +1,4 @@
-# app/models.py
+# frontend/models.py
 from dataclasses import dataclass, field, fields
 from typing import Optional, Any, Dict, List
 from datetime import datetime
@@ -18,8 +18,8 @@ class Contact(BaseModel):
     created_at: datetime = field(default_factory=datetime.now)
     updated_at: datetime = field(default_factory=datetime.now)
     properties: Dict[str, Any] = field(default_factory=dict)
-    companies: List['Company'] = field(default_factory=list)
-    deals: List['Deal'] = field(default_factory=list)
+    company_or_companies: List['Company'] = field(default_factory=list)
+    deals_or_deals: List['Deal'] = field(default_factory=list)
     tickets: List['Ticket'] = field(default_factory=list)
 
 @dataclass

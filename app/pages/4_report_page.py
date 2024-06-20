@@ -1,10 +1,10 @@
-# app/report.py
+# frontend/report.py
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
 from reportlab.lib import colors
 from reportlab.lib.units import mm
-from app.data.boilerplate import company_overview, tool_methodology_and_limitations, contact_table_data
+from app.services.boilerplate import company_overview, tool_methodology_and_limitations, contact_table_data
 
 def add_page_number(canvas, doc):
     """
