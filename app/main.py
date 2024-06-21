@@ -36,5 +36,6 @@ def main():
         # Section 2: 2b Results Display
         manage_analysis_button(uploaded_file=uploaded_file, df=transformed_df, criteria_list=criteria_list)
 
+
 if __name__ == "__main__":
     main()
