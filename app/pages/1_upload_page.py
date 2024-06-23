@@ -1,3 +1,4 @@
+"""
 import streamlit as st
 from ..utils.file_utils import manage_file_uploader
 
@@ -9,3 +10,4 @@ def main():
             st.switch_page("Match Columns")
 
 main()
+"""

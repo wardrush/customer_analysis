@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 import pandas as pd
 from app.services.analysis_service import manage_analysis_button
 

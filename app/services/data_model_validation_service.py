@@ -12,8 +12,6 @@ def display_mapping_ui(input_df: pd.DataFrame):
     # Create a dictionary to store the mapping
     column_mapping = {}
 
-    st.title("Map CRM Extract Columns to Customer Data Model")
-
     # Display the field name from the uploaded file on the left and the field name mapping box on the right
     for col in input_columns:
         col1, col2 = st.columns([2, 3])
